@@ -1,0 +1,69 @@
+# model evaluation
+# confusion matrix
+cm = confusion_matrix(y_test, y_pred_rf)
+
+sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+plt.title("Confusion Matrix - Random Forest")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
+
+# auc and roc corve
+roc_auc = roc_auc_score(y_test, y_prob_rf)
+fpr, tpr, _ = roc_curve(y_test, y_prob_rf)
+
+plt.plot(fpr, tpr, label=f"ROC AUC = {roc_auc:.2f}")
+plt.plot([0, 1], [0, 1], linestyle="--")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC Curve - Random Forest")
+plt.legend()
+plt.show()
+
+# feature importance and bussiness insight
+feature_importance = pd.Series(
+    rf_model.feature_importances_,
+    index=X.columns
+).sort_values(ascending=False)
+
+feature_importance.head(10)
+
+
+0
+reamining_contract 	0.528642
+id 	0.131724
+download_avg 	0.110197
+subscription_age 	0.086406
+upload_avg 	0.075373
+is_movie_package_subscriber 	0.027726
+is_tv_subscriber 	0.020447
+bill_avg 	0.018359
+download_over_limit 	0.000841
+service_failure_count 	0.000287
+
+
+# showing feature with bar plot
+feature_importance.head(10).plot(kind="barh")
+plt.title("Top 10 Features Influencing Churn")
+plt.gca().invert_yaxis()
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
