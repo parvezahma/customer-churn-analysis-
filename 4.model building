@@ -1,0 +1,72 @@
+# model building
+# logistic regression
+log_model = LogisticRegression()
+log_model.fit(X_train, y_train)
+
+y_pred_log = log_model.predict(X_test)
+y_prob_log = log_model.predict_proba(X_test)[:, 1]
+
+print("Logistic Regression Report\n")
+print(classification_report(y_test, y_pred_log))
+
+
+Logistic Regression Report
+
+              precision    recall  f1-score   support
+
+           0       0.84      0.93      0.88      6445
+           1       0.94      0.86      0.90      8010
+
+    accuracy                           0.89     14455
+   macro avg       0.89      0.89      0.89     14455
+weighted avg       0.90      0.89      0.89     14455
+
+
+# random forest advance model
+rf_model = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=8,
+    random_state=42
+)
+
+rf_model.fit(X_train, y_train)
+
+y_pred_rf = rf_model.predict(X_test)
+y_prob_rf = rf_model.predict_proba(X_test)[:, 1]
+
+
+# random forest model report 
+print("Random Forest Report\n")
+print(classification_report(y_test, y_pred_rf))
+
+
+
+
+Random Forest Report
+
+              precision    recall  f1-score   support
+
+           0       0.92      0.95      0.93      6445
+           1       0.96      0.93      0.94      8010
+
+    accuracy                           0.94     14455
+   macro avg       0.94      0.94      0.94     14455
+weighted avg       0.94      0.94      0.94     14455
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
