@@ -1,0 +1,109 @@
+# 2. Dataset Overview & Initial Inspection
+print("Dataset Shape:", df.shape)
+print("\nData Types:\n")
+print(df.dtypes)
+
+print("\nMissing Values:\n")
+df.isnull().sum()
+ataset Shape: (72274, 11)
+
+Data Types:
+
+id                               int64
+is_tv_subscriber                 int64
+is_movie_package_subscriber      int64
+subscription_age               float64
+bill_avg                         int64
+reamining_contract             float64
+service_failure_count            int64
+download_avg                   float64
+upload_avg                     float64
+download_over_limit              int64
+churn                            int64
+dtype: object
+
+Missing Values:
+
+	0
+id 	0
+is_tv_subscriber 	0
+is_movie_package_subscriber 	0
+subscription_age 	0
+bill_avg 	0
+reamining_contract 	21572
+service_failure_count 	0
+download_avg 	381
+upload_avg 	381
+download_over_limit 	0
+churn 	0
+
+# Target variable distribution
+df["churn"].value_counts(normalize=True) * 100
+ 
+churn 	proportion	
+1 	55.414118
+0 	44.585882
+
+
+# 3. Exploratory Data Analysis (EDA)
+sns.countplot(x="churn", data=df)
+plt.title("Customer Churn Distribution")
+plt.show()
+
+# 3.2 Numerical Feature Analysis
+numerical_features = df.select_dtypes(include=["int64", "float64"]).columns
+df[numerical_features].describe().T
+id 	is_tv_subscriber 	is_movie_package_subscriber 	subscription_age 	bill_avg 	reamining_contract 	service_failure_count 	download_avg 	upload_avg 	download_over_limit 	churn
+count 	7.227400e+04 	72274.000000 	72274.000000 	72274.000000 	72274.000000 	50702.000000 	72274.000000 	71893.000000 	71893.000000 	72274.000000 	72274.000000
+mean 	8.463182e+05 	0.815259 	0.334629 	2.450051 	18.942483 	0.716039 	0.274234 	43.689911 	4.192076 	0.207613 	0.554141
+std 	4.891022e+05 	0.388090 	0.471864 	2.034990 	13.215386 	0.697102 	0.816621 	63.405963 	9.818896 	0.997123 	0.497064
+min 	1.500000e+01 	0.000000 	0.000000 	-0.020000 	0.000000 	0.000000 	0.000000 	0.000000 	0.000000 	0.000000 	0.000000
+25% 	4.222165e+05 	1.000000 	0.000000 	0.930000 	13.000000 	0.000000 	0.000000 	6.700000 	0.500000 	0.000000 	0.000000
+50% 	8.477840e+05 	1.000000 	0.000000 	1.980000 	19.000000 	0.570000 	0.000000 	27.800000 	2.100000 	0.000000 	1.000000
+75% 	1.269562e+06 	1.000000 	1.000000 	3.300000 	22.000000 	1.310000 	0.000000 	60.500000 	4.800000 	0.000000 	1.000000
+max 	1.689744e+06 	1.000000 	1.000000 	12.800000 	406.000000 	2.920000 	19.000000 	4415.200000 	453.300000 	7.000000 	1.000000
+
+
+
+
+
+df[numerical_features].hist(figsize=(14, 10), bins=20)
+plt.suptitle("Distribution of Numerical Features")
+plt.show()
+
+
+# categorical feature vs churn
+categorical_features = ['is_tv_subscriber', 'is_movie_package_subscriber', 'service_failure_count', 'download_over_limit']
+
+for col in categorical_features:
+    plt.figure(figsize=(6, 4))
+    sns.countplot(x=col, hue="churn", data=df)
+    plt.title(f"{col} vs Churn")
+    plt.xticks(rotation=45)
+    plt.show()
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
